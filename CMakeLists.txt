@@ -16,4 +16,4 @@ file(GLOB_RECURSE sources "src/*.cpp")
 add_executable(rc ${sources})
 
 target_link_libraries(rc sfml-graphics sfml-window sfml-audio sfml-network sfml-system)
-target_include_directories(rc PUBLIC "include")
+target_include_directories(rc PUBLIC "include" "lib")
