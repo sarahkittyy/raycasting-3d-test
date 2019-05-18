@@ -59,7 +59,7 @@ private:
 	void move(const double factor, const double plus);
 
 	//UTIL//
-	double toRad(double deg)
+	constexpr double toRad(double deg)
 	{
 		return deg * 3.141592653589783238 / 180;
 	}
