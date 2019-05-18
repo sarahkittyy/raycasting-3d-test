@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "Map.hpp"
+#include "Player.hpp"
 
 int main()
 {
@@ -10,8 +11,8 @@ int main()
 	sf::Clock appClock;   //app clock
 
 	////App vars
-	Map m;   //main map
-
+	Map m;					//main map
+	Player p({200, 200});   //map player
 	////
 
 	//Configuration
@@ -34,14 +35,19 @@ int main()
 				break;
 			}
 		}
-		//ms elapsed since last frame
-		double msElapsed = appClock.restart().asSeconds() * 1000.0;
+		//seconds elapsed since last frame.
+		double elapsed = double(appClock.restart().asSeconds());
+
+		//Update the player.
+		p.update(elapsed);
 
 		//clear
 		window.clear(sf::Color(127, 127, 127));
 
 		//draw the map
 		window.draw(m);
+		//Draw the player.
+		window.draw(p);
 
 		//display
 		window.display();
