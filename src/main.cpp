@@ -38,7 +38,7 @@ int main()
 		double msElapsed = appClock.restart().asSeconds() * 1000.0;
 
 		//clear
-		window.clear();
+		window.clear(sf::Color(127, 127, 127));
 
 		//draw the map
 		window.draw(m);
