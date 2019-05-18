@@ -15,7 +15,7 @@ int main()
 	////
 
 	//Configuration
-	Line* l = m.pushLine({0, 0}, {100, 100}, sf::Color::Blue);
+	m.loadFromJson("resource/map.json");
 	//
 
 	while (window.isOpen())
