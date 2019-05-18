@@ -1,7 +1,12 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
+#include <fstream>
+#include <string>
 #include <vector>
+
+#include "nlohmann/json.hpp"
 
 #include "Line.hpp"
 
@@ -17,6 +22,13 @@ public:
 	 * 
 	 */
 	Map();
+
+	/**
+	 * @brief Load the map from given json filename
+	 * 
+	 * @param fname The path to the map json file
+	 */
+	void loadFromJson(std::string fname);
 
 	/**
 	 * @brief Push a new line to the map.
