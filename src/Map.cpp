@@ -23,6 +23,9 @@ void Map::loadFromJson(std::string fname)
 	//close the file.
 	file.close();
 
+	//Get the color
+	sf::Color color(data["color"][0], data["color"][1], data["color"][2]);
+
 	//Get the lines array.
 	json::array_t lines = data["lines"];
 	//For every two lines...
@@ -35,7 +38,7 @@ void Map::loadFromJson(std::string fname)
 		b.x = lines[i + 1][0];
 		b.y = lines[i + 1][1];
 		//Push the two lines
-		pushLine(a, b, sf::Color::White);
+		pushLine(a, b, color);
 	}
 }
 
