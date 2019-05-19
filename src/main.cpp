@@ -42,9 +42,7 @@ int main()
 		//clear
 		window.clear(sf::Color(127, 127, 127));
 
-		//draw the map
-		window.draw(m);
-		//Draw the player.
+		//Draw the player's POV.
 		window.draw(p);
 
 		//display
