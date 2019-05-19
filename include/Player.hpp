@@ -47,19 +47,19 @@ private:
 	 * @brief How far the raycaster will travel.
 	 * 
 	 */
-	const float VIEW_DIST = 200;
+	const float VIEW_DIST = INFINITY;
 
 	/**
 	 * @brief The range (in degrees) of FOV for the player.
 	 * 
 	 */
-	const float FOV = 40;
+	const float FOV = 80;
 
 	/**
 	 * @brief How many lines make up the FOV.
 	 * 
 	 */
-	const float LINES = 1000;
+	const float LINES = 800;
 
 	/**
 	 * @brief The raytracing line vertex array.
