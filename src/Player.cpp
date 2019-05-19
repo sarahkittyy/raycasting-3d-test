@@ -139,11 +139,11 @@ void Player::updateVertexArray()
 		//The distance from that point to the player's position.
 		double dist = std::hypot(pos.x - pt.x, pos.y - pt.y);
 		//That distance converted to greyscale.
-		double grey = (dist / 700) * 255.;
+		double grey = std::exp(5.5 - (dist / 80.));
 		//The color to use.
 		sf::Color color(grey, grey, grey);
 		//Get the height of the rectangle.
-		double height = 500 * 80 / dist;
+		double height = 1000 / (dist * std::cos(toRad(FOV)));
 		//Get the dist off the floor of the rectangle.
 		double floor_dist = (500 - height) / 2.0;
 		//Get the width of the rectangle.
