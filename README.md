@@ -1,7 +1,3 @@
 # Raycasting!
 
-A simple raycasting 2D test.
-
-## Future plans
-
-* Convert to a 3D Doom/Wolfenstein-esque engine?
+A simple raycasting 3D test.
