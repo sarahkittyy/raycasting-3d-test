@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <array>
 #include <cmath>
 #include <vector>
 
@@ -49,12 +50,28 @@ private:
 	const float VIEW_DIST = 200;
 
 	/**
+	 * @brief The range (in degrees) of FOV for the player.
+	 * 
+	 */
+	const float FOV = 40;
+
+	/**
+	 * @brief How many lines make up the FOV.
+	 * 
+	 */
+	const float LINES = 1000;
+
+	/**
 	 * @brief The raytracing line vertex array.
 	 * 
 	 */
-	sf::VertexArray mLines;
+	sf::VertexArray mVA;
 
-	Line fline;
+	/**
+	 * @brief The raytracing lines.
+	 * 
+	 */
+	std::vector<Line> mLines;
 
 	/**
 	 * @brief The circle representing the player.
