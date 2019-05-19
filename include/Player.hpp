@@ -3,6 +3,9 @@
 #include <SFML/Graphics.hpp>
 
 #include <cmath>
+#include <vector>
+
+#include "Map.hpp"
 
 /**
  * @brief A movable single point, representing the player / camera position.
@@ -15,8 +18,9 @@ public:
 	 * @brief Construct a new Player object
 	 * 
 	 * @param start_pos The starting player position
+	 * @param m The main app map.
 	 */
-	Player(sf::Vector2f start_pos);
+	Player(sf::Vector2f start_pos, Map* m);
 
 	/**
 	 * @brief Update the player
@@ -31,6 +35,26 @@ private:
 	 * 
 	 */
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+	/**
+	 * @brief Pointer to the main map.
+	 * 
+	 */
+	Map* mMap;
+
+	/**
+	 * @brief How far the raycaster will travel.
+	 * 
+	 */
+	const float VIEW_DIST = 200;
+
+	/**
+	 * @brief The raytracing line vertex array.
+	 * 
+	 */
+	sf::VertexArray mLines;
+
+	Line fline;
 
 	/**
 	 * @brief The circle representing the player.
@@ -57,6 +81,12 @@ private:
 	 * @param plus The additional term added to {xv, yv} * factor.
 	 */
 	void move(const double factor, const double plus);
+
+	/**
+	 * @brief Update the raycast lines.
+	 * 
+	 */
+	void updateCastLines();
 
 	//UTIL//
 	constexpr double toRad(double deg)
