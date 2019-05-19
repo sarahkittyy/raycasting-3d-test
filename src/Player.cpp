@@ -143,7 +143,7 @@ void Player::updateVertexArray()
 		//The color to use.
 		sf::Color color(grey, grey, grey);
 		//Get the height of the rectangle.
-		double height = 1000 / (dist * std::cos(toRad(FOV)));
+		double height = 1000. / (dist * std::cos(toRad(FOV)));
 		//Get the dist off the floor of the rectangle.
 		double floor_dist = (500 - height) / 2.0;
 		//Get the width of the rectangle.
