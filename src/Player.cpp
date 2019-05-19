@@ -14,13 +14,10 @@ Player::Player(sf::Vector2f start_pos, Map* m)
 	mVel   = 0;
 	mAngle = 0;
 
-	mLines.setPrimitiveType(sf::Lines);
+	mVA.setPrimitiveType(sf::Lines);
 
-
-	fline.bind(&mLines);
-	//Create the forward-facing line
-	fline.set(0, start_pos);
-	fline.set(1, mMap->castRay(start_pos, mAngle, VIEW_DIST));
+	//Update the raycasting lines.
+	updateCastLines();
 }
 
 void Player::update(const double seconds)
@@ -99,15 +96,35 @@ void Player::move(const double factor, const double plus)
 
 void Player::updateCastLines()
 {
+	//player pos.
 	sf::Vector2f pos = mPlayer.getPosition();
-	fline.set(0, pos);
-	fline.set(1, mMap->castRay(pos, 180 - mAngle, VIEW_DIST));
+	//clear raytracing lines.
+	mLines.clear();
+	mVA.clear();
+	//For every line..
+	for (size_t i = 0; i < (size_t)LINES; ++i)
+	{
+		//Get the angle range..
+		float angle_min = mAngle - FOV / 2.f;
+		float angle_max = mAngle + FOV / 2.f;
+		//Get the angle to use
+		float angle = angle_min + (angle_max - angle_min) * (float(i) / LINES);
+
+		//Push the line.
+		mLines.push_back(Line(pos, mMap->castRay(pos,
+												 size_t(180 - angle) % 360,
+												 VIEW_DIST)));
+		//Get the new line.
+		Line* l = &mLines.back();
+		//Bind the line.
+		l->bind(&mVA, sf::Color::Red);
+	}
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	//Draw the raycast lines
+	target.draw(mVA, states);
 	//Draw the player
 	target.draw(mPlayer, states);
-	//Draw the raycast lines
-	target.draw(mLines, states);
 }
