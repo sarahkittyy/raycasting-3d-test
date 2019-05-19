@@ -11,13 +11,11 @@ int main()
 	sf::Clock appClock;   //app clock
 
 	////App vars
-	Map m;					//main map
-	Player p({200, 200});   //map player
-	////
-
-	//Configuration
+	Map m;   //main map
 	m.loadFromJson("resource/map.json");
-	//
+
+	Player p({200, 500}, &m);   //map player
+	////
 
 	while (window.isOpen())
 	{
