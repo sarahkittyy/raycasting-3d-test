@@ -54,9 +54,10 @@ Line* Map::pushLine(sf::Vector2f a, sf::Vector2f b, sf::Color color)
 	return created;
 }
 
-sf::Vector2f Map::castRay(sf::Vector2f pt1, float theta, float max)
+sf::Vector2f Map::castRay(sf::Vector2f pt1, double theta, float max)
 {
 	theta = toRad(theta);
+	theta = float(int(theta * 100)) / 100.f;
 
 	//Second point to the input line.
 	sf::Vector2f pt2(pt1.x + max * std::sin(theta), pt1.y + max * std::cos(theta));
@@ -129,19 +130,22 @@ sf::Vector2f Map::castRay(sf::Vector2f pt1, float theta, float max)
 		}
 
 		//Check if the colliding point is contained in both rectangles created by both lines.
-		sf::FloatRect r1(std::min(l1.x, l2.x),
-						 std::min(l1.y, l2.y),
-						 std::max(std::abs(l2.x - l1.x), 1.f),
-						 std::max(std::abs(l2.y - l1.y), 1.f));
-		sf::FloatRect r2(std::min(pt1.x, pt2.x),
-						 std::min(pt1.y, pt2.y),
-						 std::max(std::abs(pt2.x - pt1.x), 1.f),
-						 std::max(std::abs(pt2.y - pt1.y), 1.f));
+		sf::FloatRect r1(std::min(l1.x, l2.x) - 1.f,
+						 std::min(l1.y, l2.y) - 1.f,
+						 std::max(std::abs(l2.x - l1.x) + 1.f, 2.f),
+						 std::max(std::abs(l2.y - l1.y) + 1.f, 2.f));
+		sf::FloatRect r2(std::min(pt1.x, pt2.x) - 1.f,
+						 std::min(pt1.y, pt2.y) - 1.f,
+						 std::max(std::abs(pt2.x - pt1.x) + 1.f, 2.f),
+						 std::max(std::abs(pt2.y - pt1.y) + 1.f, 2.f));
 		//If they both contain the point...
 		if (r1.contains(intersection) && r2.contains(intersection))
 		{
 			//Check the distance from intersection to min_res
-			if (std::hypot(intersection.x, intersection.y) < std::hypot(min_res.x, min_res.y))
+			if (std::hypot(pt1.x - intersection.x,
+						   pt1.y - intersection.y) <
+				std::hypot(pt1.x - min_res.x,
+						   pt1.y - min_res.y))
 			{
 				//If it's closer, set it.
 				min_res = intersection;
