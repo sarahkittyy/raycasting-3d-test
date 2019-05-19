@@ -59,6 +59,12 @@ sf::Vector2f Map::castRay(sf::Vector2f pt1, double theta, float max)
 	theta = toRad(theta);
 	theta = float(int(theta * 100)) / 100.f;
 
+	//Turn infinity to just a really big number, for compatibility.
+	if (max == INFINITY)
+	{
+		max = 9999999.f;
+	}
+
 	//Second point to the input line.
 	sf::Vector2f pt2(pt1.x + max * std::sin(theta), pt1.y + max * std::cos(theta));
 
