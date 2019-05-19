@@ -30,6 +30,12 @@ public:
 	 */
 	void update(const double seconds);
 
+	/**
+	 * @brief Draw the 2d representation of the player & the raytraced map.
+	 * 
+	 */
+	void draw2D(sf::RenderTarget& target, sf::RenderStates states) const;
+
 private:
 	/**
 	 * @brief SFML's draw() override.
@@ -68,6 +74,12 @@ private:
 	sf::VertexArray mVA;
 
 	/**
+	 * @brief The 2D vertex array for the top-down view of the raytracing lines.
+	 * 
+	 */
+	sf::VertexArray mLineArray;
+
+	/**
 	 * @brief The raytracing lines.
 	 * 
 	 */
@@ -104,6 +116,12 @@ private:
 	 * 
 	 */
 	void updateCastLines();
+
+	/**
+	 * @brief Update the vertex array for the quads rendered by the cast lines.
+	 * 
+	 */
+	void updateVertexArray();
 
 	//UTIL//
 	constexpr double toRad(double deg)

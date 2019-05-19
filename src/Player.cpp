@@ -14,7 +14,8 @@ Player::Player(sf::Vector2f start_pos, Map* m)
 	mVel   = 0;
 	mAngle = 0;
 
-	mVA.setPrimitiveType(sf::Lines);
+	mVA.setPrimitiveType(sf::Quads);
+	mLineArray.setPrimitiveType(sf::Lines);
 
 	//Update the raycasting lines.
 	updateCastLines();
@@ -100,7 +101,7 @@ void Player::updateCastLines()
 	sf::Vector2f pos = mPlayer.getPosition();
 	//clear raytracing lines.
 	mLines.clear();
-	mVA.clear();
+	mLineArray.clear();
 	//For every line..
 	for (size_t i = 0; i < (size_t)LINES; ++i)
 	{
@@ -114,17 +115,70 @@ void Player::updateCastLines()
 		mLines.push_back(Line(pos, mMap->castRay(pos,
 												 size_t(180 - angle) % 360,
 												 VIEW_DIST)));
-		//Get the new line.
-		Line* l = &mLines.back();
+
 		//Bind the line.
-		l->bind(&mVA, sf::Color::Red);
+		mLines.back().bind(&mLineArray, sf::Color::Red);
 	}
+
+	updateVertexArray();
+}
+
+void Player::updateVertexArray()
+{
+	mVA.clear();
+	//Player's position.
+	sf::Vector2f pos = mPlayer.getPosition();
+
+	size_t index = 0;
+
+	//For every cast line...
+	for (auto& line : mLines)
+	{
+		//The point it's collided with...
+		sf::Vector2f pt = line.get(1);
+		//The distance from that point to the player's position.
+		double dist = std::hypot(pos.x - pt.x, pos.y - pt.y);
+		//That distance converted to greyscale.
+		double grey = (dist / 700) * 255.;
+		//The color to use.
+		sf::Color color(grey, grey, grey);
+		//Get the height of the rectangle.
+		double height = 500 * 80 / dist;
+		//Get the dist off the floor of the rectangle.
+		double floor_dist = (500 - height) / 2.0;
+		//Get the width of the rectangle.
+		double width = 500. / double(mLines.size());
+
+		//Get the top left coord of the rectangle.
+		sf::Vector2f tl(width * index,
+						floor_dist);
+
+		//Create the four points
+		mVA.append(sf::Vertex(
+			sf::Vector2f(tl.x, tl.y),
+			color));
+		mVA.append(sf::Vertex(
+			sf::Vector2f(tl.x + width, tl.y),
+			color));
+		mVA.append(sf::Vertex(
+			sf::Vector2f(tl.x + width, tl.y + height),
+			color));
+		mVA.append(sf::Vertex(
+			sf::Vector2f(tl.x, tl.y + height),
+			color));
+
+
+		index++;
+	}
+}
+
+void Player::draw2D(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(mLineArray, states);
+	target.draw(mPlayer, states);
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	//Draw the raycast lines
 	target.draw(mVA, states);
-	//Draw the player
-	target.draw(mPlayer, states);
 }
