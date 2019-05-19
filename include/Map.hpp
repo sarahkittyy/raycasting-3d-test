@@ -53,7 +53,7 @@ public:
 	 * 
 	 * @return sf::Vector2f The point of intersection of the ray on the map's lines, or the initial point if no intersection was found.
 	 */
-	sf::Vector2f castRay(sf::Vector2f pt1, float theta, float max);
+	sf::Vector2f castRay(sf::Vector2f pt1, double theta, float max);
 
 private:
 	/**
