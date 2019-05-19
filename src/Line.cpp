@@ -10,7 +10,10 @@ void Line::bind(sf::VertexArray* v, sf::Color c)
 {
 	//The (new) size of the vertex array
 	size_t s = v->getVertexCount() + 2;
-	v->resize(s);
+	while (v->getVertexCount() < s)
+	{
+		v->append(sf::Vertex());
+	}
 	//Bind the two new vertices
 	mBound[0] = &((*v)[s - 1]);
 	mBound[1] = &((*v)[s - 2]);

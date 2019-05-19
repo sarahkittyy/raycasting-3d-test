@@ -15,7 +15,7 @@ public:
 	 * @param a Point A
 	 * @param b Point B
 	 */
-	Line(sf::Vector2f a, sf::Vector2f b);
+	Line(sf::Vector2f a = {0, 0}, sf::Vector2f b = {0, 0});
 
 	/**
 	 * @brief Bind the line to a vertex array.
